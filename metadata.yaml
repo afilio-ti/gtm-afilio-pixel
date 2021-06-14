@@ -1,0 +1,5 @@
+homepage: "https://www.afilio.com.br"
+documentation: "https://github.com/afilio-ti/gtm-gallery"
+versions:
+  - sha: 
+    changeNotes: Initial Version
