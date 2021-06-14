@@ -1,5 +1,5 @@
 homepage: "https://www.afilio.com.br"
 documentation: "https://github.com/afilio-ti/gtm-afilio-pixel"
 versions: v01
-  - sha: 5cc2b15dcdc0ca853e3e36732b318f270d28d052
+  - sha: 7f6c4d9416563e7361beb578b98c687872b3a122
     changeNotes: Initial Version
