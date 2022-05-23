@@ -1,4 +1,4 @@
-﻿___TERMS_OF_SERVICE___
+___TERMS_OF_SERVICE___
 
 By creating or modifying this file you agree to Google Tag Manager's Community
 Template Gallery Developer Terms of Service available at
@@ -53,7 +53,7 @@ ___TEMPLATE_PARAMETERS___
         "type": "NON_EMPTY"
       }
     ],
-    "help": "Escolher a plataforma da campanha."
+    "help": "Escolher a plataforma da campanha. Select the platform."
   },
   {
     "type": "RADIO",
@@ -75,7 +75,7 @@ ___TEMPLATE_PARAMETERS___
         "type": "NON_EMPTY"
       }
     ],
-    "help": "Deve ser marcado com o tipo da campanha, se é de vendas ou de cadastros.",
+    "help": "Deve ser marcado com o tipo da campanha, se é de vendas ou de cadastros.\nSelect the campaign type. Sale or Lead.",
     "enablingConditions": [
       {
         "paramName": "pixel",
@@ -104,7 +104,7 @@ ___TEMPLATE_PARAMETERS___
         "type": "NON_EMPTY"
       }
     ],
-    "help": "Deve ser marcado com o tipo da campanha, se é de vendas ou de cadastros.",
+    "help": "Deve ser marcado com o tipo da campanha, se é de vendas ou de cadastros.\nSelect the campaign type. Sale or Lead.",
     "enablingConditions": [
       {
         "paramName": "pixel",
@@ -134,7 +134,8 @@ ___TEMPLATE_PARAMETERS___
         "paramValue": "sale.php",
         "type": "EQUALS"
       }
-    ]
+    ],
+    "help": "Selecionar caso tenha mais de uma de tarifa.\nSelect if there is more than one type of payout."
   },
   {
     "type": "TEXT",
@@ -153,7 +154,7 @@ ___TEMPLATE_PARAMETERS___
         "type": "NON_EMPTY"
       }
     ],
-    "help": "Deve ser preenchido com o ID do Pixel."
+    "help": "Deve ser preenchido com o ID do Pixel. Insert pixel ID."
   },
   {
     "type": "TEXT",
@@ -165,7 +166,7 @@ ___TEMPLATE_PARAMETERS___
         "type": "NON_EMPTY"
       }
     ],
-    "help": "Deve ser preenchido com o ID da Campanha na Afilio.",
+    "help": "Deve ser preenchido com o ID da Campanha na Afilio.\nInsert the campaign id.",
     "enablingConditions": [
       {
         "paramName": "pixel",
@@ -184,7 +185,7 @@ ___TEMPLATE_PARAMETERS___
         "type": "NON_EMPTY"
       }
     ],
-    "help": "Deve ser preenchido com um ID único da conversão. Pode ser chamado de Transaction ID, Order ID, Conversion ID, ou similares."
+    "help": "Deve ser preenchido com um ID único da conversão. Pode ser chamado de Transaction ID, Order ID, Conversion ID, ou similares.\nShould be filled with an unique conversion ID. Could be called Transaction ID, Order ID, Conversion ID, Registration ID or similar."
   },
   {
     "type": "TEXT",
@@ -204,7 +205,7 @@ ___TEMPLATE_PARAMETERS___
         "errorMessage": "Não pode ficar em branco para campanhas do tipo sale."
       }
     ],
-    "help": "Deve ser preenchido com o valor total da compra. Para V2, remover o separador decimal. Para V3, utilizar separador decimal.",
+    "help": "Deve ser preenchido com o valor total da compra. Para V2, remover o separador decimal. Para V3, utilizar separador decimal.\nShould be filled with the total value of the purchase, with discounts and without shipping. Should have decimal separator.",
     "enablingConditions": [
       {
         "paramName": "type",
@@ -223,7 +224,7 @@ ___TEMPLATE_PARAMETERS___
     "name": "remid",
     "displayName": "Código Multi Tarifa*",
     "simpleValueType": true,
-    "help": "Deve ser preenchido com o remid no caso de campanhas multi tarifa.",
+    "help": "Deve ser preenchido com o remid no caso de campanhas multitarifa.\nInsert value for one specifc payout.",
     "enablingConditions": [
       {
         "paramName": "multitarifa",
@@ -253,7 +254,8 @@ ___TEMPLATE_PARAMETERS___
         "paramValue": "v2",
         "type": "EQUALS"
       }
-    ]
+    ],
+    "help": "Selecionar caso precise de um parâmetro extra.\nSelect if an extra parameter is needed."
   },
   {
     "type": "RADIO",
@@ -276,7 +278,8 @@ ___TEMPLATE_PARAMETERS___
         "paramValue": "v3",
         "type": "EQUALS"
       }
-    ]
+    ],
+    "help": "Selecionar caso precise de um parâmetro extra.\nSelect if an extra parameter is needed."
   },
   {
     "type": "RADIO",
@@ -299,7 +302,8 @@ ___TEMPLATE_PARAMETERS___
         "paramValue": "v3",
         "type": "EQUALS"
       }
-    ]
+    ],
+    "help": "id_click"
   },
   {
     "type": "RADIO",
@@ -322,14 +326,15 @@ ___TEMPLATE_PARAMETERS___
         "paramValue": "v2",
         "type": "EQUALS"
       }
-    ]
+    ],
+    "help": "pbid"
   },
   {
     "type": "TEXT",
     "name": "xtra",
     "displayName": "Extra (Opcional)",
     "simpleValueType": true,
-    "help": "Pode ser preenchido com informações adicionais. (Não incluir caracteres especiais)",
+    "help": "Pode ser preenchido com informações adicionais. (Não incluir caracteres especiais)\nInsert an optional variable.",
     "enablingConditions": [
       {
         "paramName": "adicional_v2",
@@ -343,7 +348,7 @@ ___TEMPLATE_PARAMETERS___
     "name": "clickid_v2",
     "displayName": "Pbid (Clickid V2)",
     "simpleValueType": true,
-    "help": "Deve ser preenchido com o pbid enviado pela url.",
+    "help": "Deve ser preenchido com o pbid enviado pela url.\nShould be filled with the pbid that was sent through the URL.",
     "enablingConditions": [
       {
         "paramName": "ad_clickid_v2",
@@ -357,7 +362,7 @@ ___TEMPLATE_PARAMETERS___
     "name": "clickid_v3",
     "displayName": "Clickid V3",
     "simpleValueType": true,
-    "help": "Deve ser preenchido com o pbid enviado pela url.",
+    "help": "Deve ser preenchido com o id_click enviado pela url.\nShould be filled with the id_click that was sent through the URL.",
     "enablingConditions": [
       {
         "paramName": "ad_clickid_v3",
@@ -371,7 +376,7 @@ ___TEMPLATE_PARAMETERS___
     "name": "ad_xtra1",
     "displayName": "Extra 01 (Opcional)",
     "simpleValueType": true,
-    "help": "Pode ser preenchido com informações adicionais. (Não incluir caracteres especiais)",
+    "help": "Pode ser preenchido com informações adicionais. (Não incluir caracteres especiais)\nInsert an optional variable.",
     "enablingConditions": [
       {
         "paramName": "adicional_v3",
@@ -385,7 +390,7 @@ ___TEMPLATE_PARAMETERS___
     "name": "ad_xtra2",
     "displayName": "Extra 02 (Opcional)",
     "simpleValueType": true,
-    "help": "Pode ser preenchido com informações adicionais. (Não incluir caracteres especiais)",
+    "help": "Pode ser preenchido com informações adicionais. (Não incluir caracteres especiais)\nInsert an optional variable.",
     "enablingConditions": [
       {
         "paramName": "adicional_v3",
@@ -399,7 +404,7 @@ ___TEMPLATE_PARAMETERS___
     "name": "ad_xtra3",
     "displayName": "Extra 03 (Opcional)",
     "simpleValueType": true,
-    "help": "Pode ser preenchido com informações adicionais. (Não incluir caracteres especiais)",
+    "help": "Pode ser preenchido com informações adicionais. (Não incluir caracteres especiais)\nInsert an optional variable.",
     "enablingConditions": [
       {
         "paramName": "adicional_v3",
