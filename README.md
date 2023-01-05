@@ -18,5 +18,5 @@
 
 ### Configuration
 
-![Afilio Pixel](https://user-images.githubusercontent.com/78829381/128770298-307bb9cb-5e18-4260-8d44-26988d800359.jpg)
+![AIP InnovCare](https://user-images.githubusercontent.com/78829381/128770298-307bb9cb-5e18-4260-8d44-26988d800359.jpg)
 
