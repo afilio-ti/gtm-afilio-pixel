@@ -1,22 +1,36 @@
-# Pixel de Conversão Afilio
+<img src="https://user-images.githubusercontent.com/78829381/121952199-500cb100-cd32-11eb-9cf6-a420f6acde9e.png" width='140px' height='140px' align='left' />
 
-![1519895482968](https://user-images.githubusercontent.com/78829381/121952199-500cb100-cd32-11eb-9cf6-a420f6acde9e.png)
+# **Template para Pixel de Conversão Afilio**
 
-## Parameters
+Este template permite a implementação do **Pixel de Conversão Afilio** no **Google Tag Manager (GTM)**, garantindo o rastreamento correto das conversões em campanhas de **Sale** e **Lead**.
 
-*Pixel* - On different pages use this values: `V2` and `V3`.<br>
-*Type, TypeV3* - On different pages use this values: `Sale` and `Lead`.<br>
-*Pid* - Insert the campaign id.<br>
-*Multitarifa* - Select if there is more than one type of payout.<br>
-*Adicional_v2, Adicional_v3* - Select if an extra parameter is needed.<br>
-*Xtra* - Insert an optional variable.<br>
-*Ad_xtra1, Ad_xtra2, Ad_xtra3* - Insert an optional variable.<br>
-*Remid* - Insert value for one specifc payout.<br>
-*Order_Price* - Insert a variable with the subtotal.<br>
-*Order_Id* - ID of order, needed only on thank you page.<br>
-*Act_Id* - insert pixel ID.
+---
 
-### Configuration
+## **📌 Configuração**
 
-![Afilio Pixel](https://user-images.githubusercontent.com/78829381/128770298-307bb9cb-5e18-4260-8d44-26988d800359.jpg)
+O template possui duas configurações principais:
 
+1. **Init** – Armazena o **Click ID** e a **origem da conversão (utm_source)** no `localStorage`.
+2. **Tagging** – Dispara o **Pixel de Conversão**, incluindo os parâmetros necessários para o rastreamento.
+
+### **🎯 Parâmetros do Pixel**
+
+| Parâmetro                        | Descrição                                                    |
+| -------------------------------- | ------------------------------------------------------------ |
+| **click_id**                     | Deve ser preenchido com o **Click ID** enviado na URL.       |
+| **type**                         | Tipo da campanha: `sale` (venda) ou `lead` (cadastro).       |
+| **act_id**                       | ID do Pixel de Conversão (**ACT ID**).                       |
+| **order_id**                     | ID único da conversão (Transaction ID, Order ID, etc.).      |
+| **order_price**                  | Valor total da compra (aplicável para campanhas `sale`).     |
+| **adicional**                    | Define se há necessidade de um campo extra (`sim` ou `nao`). |
+| **ad_xtra1, ad_xtra2, ad_xtra3** | Campos extras opcionais para informações adicionais.         |
+
+---
+
+## **📜 Permissões**
+
+Para o correto funcionamento do template, as seguintes permissões são necessárias:
+
+✅ **Acesso ao Local Storage** (`afclick`, `aforigin`)  
+✅ **Envio de requisições para** `https://p.afilio.com.br/`  
+✅ **Leitura da URL da página**
