@@ -10,9 +10,8 @@ ___INFO___
 
 {
   "type": "TAG",
-  "id": "cvt_temp_public_id",
+  "id": "cvt_TX2G3",
   "version": 1,
-  "securityGroups": [],
   "displayName": "Afilio Pixel",
   "categories": [
     "AFFILIATE_MARKETING",
@@ -26,7 +25,8 @@ ___INFO___
   "description": "Rastreia vendas e leads em campanhas da Afilio, garantindo atribuição correta e integração simplificada via Google Tag Manager (GTM).",
   "containerContexts": [
     "WEB"
-  ]
+  ],
+  "securityGroups": []
 }
 
 
@@ -48,25 +48,6 @@ ___TEMPLATE_PARAMETERS___
       }
     ],
     "simpleValueType": true
-  },
-  {
-    "type": "TEXT",
-    "name": "click_id",
-    "displayName": "Click ID",
-    "simpleValueType": true,
-    "help": "Deve ser preenchido com o Click ID enviado na URL. Insert click_id.",
-    "valueValidators": [
-      {
-        "type": "NON_EMPTY"
-      }
-    ],
-    "enablingConditions": [
-      {
-        "paramName": "config",
-        "paramValue": "init",
-        "type": "EQUALS"
-      }
-    ]
   },
   {
     "type": "RADIO",
@@ -236,22 +217,23 @@ ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 const log = require('logToConsole');
 const encode = require('encodeUriComponent');
 const sendPixel = require('sendPixel');
-const makeString = require ('makeString');
-const makeNumber = require ('makeNumber');
-const localStorage = require ('localStorage');
-const Random = require ('generateRandom');
+const makeString = require('makeString');
+const makeNumber = require('makeNumber');
+const localStorage = require('localStorage');
+const setCookie = require('setCookie');
+const getCookie = require('getCookieValues');
+const Random = require('generateRandom');
 const getUrl = require('getUrl');
-var click_id = makeString(data.click_id);
+
 var type = makeString(data.type);
 var config = makeString(data.config);
 var order_id = makeString(data.order_id);
 var order_price = makeString(data.order_price);
 var adicional = makeString(data.adicional);
-var xtra = makeString(data.xtra);
+var act_id = makeString(data.act_id);
 var ad_xtra1 = makeString(data.ad_xtra1);
 var ad_xtra2 = makeString(data.ad_xtra2);
 var ad_xtra3 = makeString(data.ad_xtra3);
-var act_id = makeString(data.act_id);
 
 var url;
 
@@ -270,35 +252,70 @@ function getQueryParam(url, param) {
     return null;
 }
 
-if(config == 'init'){
-  if (click_id !== "" && click_id !== "undefined" && click_id.length == 24){
-    localStorage.setItem('afclick', click_id);
+function getValue(key) {
+  var value = localStorage.getItem(key);
+  
+  if (value === null || value === "undefined" || value === "") {
+    var cookieValues = getCookie(key);
+    if (cookieValues.length > 0) {
+      value = cookieValues[0];
+    }
   }
   
- const currentUrl = getUrl("query");
- const utmSource = getQueryParam(currentUrl, 'utm_source');
- if(utmSource){
-   localStorage.setItem("aforigin", utmSource);
+  return value;
+}
+
+function setParams(){
+  const currentUrl = getUrl("query");
+  
+  const id_click = getQueryParam(currentUrl, 'id_click');
+  if (id_click !== "" && id_click !== "undefined" && id_click.length == 24){
+    localStorage.setItem('afclick', id_click);
+
+    setCookie('afclick', id_click, {
+      path: '/',
+      maxAge: 2592000,
+      domain: "." + getUrl("host")
+    });
+  }
+  
+ const utm_source = getQueryParam(currentUrl, 'utm_source');
+ if(utm_source){
+   localStorage.setItem("aforigin", utm_source);
+
+   setCookie('aforigin', utm_source, {
+      path: '/',
+      maxAge: 2592000,
+      domain: "." + getUrl("host")
+    });
  }
 }
+
+if(config == 'init'){
+  setParams();
+}
 else {
-  const origin = localStorage.getItem('aforigin');
+  const origin = getValue('aforigin');
+  const click = getValue('afclick');
+  let url;
   
-  url = ('https://p.afilio.com.br/?tra_id=' + encode(order_id) + '&act_id=' + encode(act_id) + '&origin=' + encode(origin));
+  url = 'https://p.afilio.com.br/?tra_id=' + encode(order_id) +
+        '&act_id=' + encode(act_id) +
+        '&origin=' + encode(origin) +
+        '&id_click=' + encode(click);
 
   if (type == 'sale'){
     url += '&price=' + encode(order_price);
   }
-  if (adicional == 'sim'){
-    url += '&ad_xtra1=' + encode(ad_xtra1) + '&ad_xtra2=' + encode(ad_xtra2) + '&ad_xtra3=' + encode(ad_xtra3);
+  if (adicional === 'sim') {
+    url += '&ad_xtra1=' + encode(ad_xtra1) +
+           '&ad_xtra2=' + encode(ad_xtra2) +
+           '&ad_xtra3=' + encode(ad_xtra3);
   }
 
-  url += '&id_click=' + encode(localStorage.getItem('afclick'));
   sendPixel(url, data.gtmOnSuccess() , data.gtmOnFailure());
 }
 
-
-// Chame data.gtmOnSuccess depois que a tag for concluída.
 data.gtmOnSuccess();
 data.gtmOnFailure();
 
@@ -471,6 +488,143 @@ ___WEB_PERMISSIONS___
       "isEditedByUser": true
     },
     "isRequired": true
+  },
+  {
+    "instance": {
+      "key": {
+        "publicId": "get_cookies",
+        "versionId": "1"
+      },
+      "param": [
+        {
+          "key": "cookieAccess",
+          "value": {
+            "type": 1,
+            "string": "any"
+          }
+        }
+      ]
+    },
+    "clientAnnotations": {
+      "isEditedByUser": true
+    },
+    "isRequired": true
+  },
+  {
+    "instance": {
+      "key": {
+        "publicId": "set_cookies",
+        "versionId": "1"
+      },
+      "param": [
+        {
+          "key": "allowedCookies",
+          "value": {
+            "type": 2,
+            "listItem": [
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "name"
+                  },
+                  {
+                    "type": 1,
+                    "string": "domain"
+                  },
+                  {
+                    "type": 1,
+                    "string": "path"
+                  },
+                  {
+                    "type": 1,
+                    "string": "secure"
+                  },
+                  {
+                    "type": 1,
+                    "string": "session"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "afclick"
+                  },
+                  {
+                    "type": 1,
+                    "string": "*"
+                  },
+                  {
+                    "type": 1,
+                    "string": "*"
+                  },
+                  {
+                    "type": 1,
+                    "string": "any"
+                  },
+                  {
+                    "type": 1,
+                    "string": "any"
+                  }
+                ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "name"
+                  },
+                  {
+                    "type": 1,
+                    "string": "domain"
+                  },
+                  {
+                    "type": 1,
+                    "string": "path"
+                  },
+                  {
+                    "type": 1,
+                    "string": "secure"
+                  },
+                  {
+                    "type": 1,
+                    "string": "session"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "aforigin"
+                  },
+                  {
+                    "type": 1,
+                    "string": "*"
+                  },
+                  {
+                    "type": 1,
+                    "string": "*"
+                  },
+                  {
+                    "type": 1,
+                    "string": "any"
+                  },
+                  {
+                    "type": 1,
+                    "string": "any"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "clientAnnotations": {
+      "isEditedByUser": true
+    },
+    "isRequired": true
   }
 ]
 
@@ -483,5 +637,3 @@ scenarios: []
 ___NOTES___
 
 Created on 09/08/2021 17:22:25
-
-

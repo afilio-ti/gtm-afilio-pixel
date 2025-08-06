@@ -17,7 +17,6 @@ O template possui duas configurações principais:
 
 | Parâmetro                        | Descrição                                                    |
 | -------------------------------- | ------------------------------------------------------------ |
-| **click_id**                     | Deve ser preenchido com o **Click ID** enviado na URL.       |
 | **type**                         | Tipo da campanha: `sale` (venda) ou `lead` (cadastro).       |
 | **act_id**                       | ID do Pixel de Conversão (**ACT ID**).                       |
 | **order_id**                     | ID único da conversão (Transaction ID, Order ID, etc.).      |
@@ -31,6 +30,6 @@ O template possui duas configurações principais:
 
 Para o correto funcionamento do template, as seguintes permissões são necessárias:
 
-✅ **Acesso ao Local Storage** (`afclick`, `aforigin`)  
+✅ **Acesso ao Local Storage e Cookies** (`afclick`, `aforigin`)  
 ✅ **Envio de requisições para** `https://p.afilio.com.br/`  
 ✅ **Leitura da URL da página**
