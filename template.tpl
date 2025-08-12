@@ -265,31 +265,33 @@ function getValue(key) {
   return value;
 }
 
-function setParams(){
+function setParams() {
   const currentUrl = getUrl("query");
-  
+  let host = getUrl("host").replace("www.", "");
+
   const id_click = getQueryParam(currentUrl, 'id_click');
-  if (id_click !== "" && id_click !== "undefined" && id_click.length == 24){
+  if (id_click && id_click !== "undefined" && id_click.length === 24) {
     localStorage.setItem('afclick', id_click);
 
     setCookie('afclick', id_click, {
       path: '/',
       maxAge: 2592000,
-      domain: "." + getUrl("host")
+      domain: "." + host
     });
   }
-  
- const utm_source = getQueryParam(currentUrl, 'utm_source');
- if(utm_source){
-   localStorage.setItem("aforigin", utm_source);
 
-   setCookie('aforigin', utm_source, {
+  const utm_source = getQueryParam(currentUrl, 'utm_source');
+  if (utm_source) {
+    localStorage.setItem("aforigin", utm_source);
+
+    setCookie('aforigin', utm_source, {
       path: '/',
       maxAge: 2592000,
-      domain: "." + getUrl("host")
+      domain: "." + host
     });
- }
+  }
 }
+
 
 if(config == 'init'){
   setParams();
@@ -637,3 +639,5 @@ scenarios: []
 ___NOTES___
 
 Created on 09/08/2021 17:22:25
+
+
