@@ -1,4 +1,4 @@
-﻿___TERMS_OF_SERVICE___
+___TERMS_OF_SERVICE___
 
 By creating or modifying this file you agree to Google Tag Manager's Community
 Template Gallery Developer Terms of Service available at
@@ -12,7 +12,7 @@ ___INFO___
   "type": "TAG",
   "id": "cvt_TX2G3",
   "version": 1,
-  "displayName": "Afilio Pixel",
+  "displayName": "Teste Afilio Pixel Cupom",
   "categories": [
     "AFFILIATE_MARKETING",
     "ADVERTISING"
@@ -144,6 +144,33 @@ ___TEMPLATE_PARAMETERS___
     ]
   },
   {
+    "type": "TEXT",
+    "name": "coupon",
+    "displayName": "Cupom",
+    "simpleValueType": true,
+    "valueValidators": [
+      {
+        "type": "NON_EMPTY",
+        "enablingConditions": [
+          {
+            "paramName": "type",
+            "paramValue": "sale.php",
+            "type": "EQUALS"
+          }
+        ],
+        "errorMessage": "Não pode ficar em branco para campanhas do tipo sale."
+      }
+    ],
+    "help": "Deve ser preenchido com a variável de Cupom.\nShould be populated with the Coupon variable.",
+    "enablingConditions": [
+      {
+        "paramName": "type",
+        "paramValue": "sale",
+        "type": "EQUALS"
+      }
+    ]
+  },
+  {
     "type": "RADIO",
     "name": "adicional",
     "displayName": "Deseja um campo Extra?",
@@ -208,6 +235,34 @@ ___TEMPLATE_PARAMETERS___
         "type": "EQUALS"
       }
     ]
+  },
+  {
+    "type": "TEXT",
+    "name": "ad_xtra4",
+    "displayName": "Extra 04 (Opcional)",
+    "simpleValueType": true,
+    "help": "Pode ser preenchido com informações adicionais. (Não incluir caracteres especiais)\nInsert an optional variable.",
+    "enablingConditions": [
+      {
+        "paramName": "adicional",
+        "paramValue": "sim",
+        "type": "EQUALS"
+      }
+    ]
+  },
+  {
+    "type": "TEXT",
+    "name": "ad_xtra5",
+    "displayName": "Extra 05 (Opcional)",
+    "simpleValueType": true,
+    "help": "Pode ser preenchido com informações adicionais. (Não incluir caracteres especiais)\nInsert an optional variable.",
+    "enablingConditions": [
+      {
+        "paramName": "adicional",
+        "paramValue": "sim",
+        "type": "EQUALS"
+      }
+    ]
   }
 ]
 
@@ -231,9 +286,12 @@ var order_id = makeString(data.order_id);
 var order_price = makeString(data.order_price);
 var adicional = makeString(data.adicional);
 var act_id = makeString(data.act_id);
+var coupon = makeString(data.coupon);
 var ad_xtra1 = makeString(data.ad_xtra1);
 var ad_xtra2 = makeString(data.ad_xtra2);
 var ad_xtra3 = makeString(data.ad_xtra3);
+var ad_xtra4 = makeString(data.ad_xtra4);
+var ad_xtra5 = makeString(data.ad_xtra5);
 
 var url;
 
@@ -304,15 +362,23 @@ else {
   url = 'https://p.afilio.com.br/?tra_id=' + encode(order_id) +
         '&act_id=' + encode(act_id) +
         '&origin=' + encode(origin) +
-        '&id_click=' + encode(click);
+        '&id_click=' + encode(click) +
+        '&coupon=' + encode(coupon);
 
-  if (type == 'sale'){
+  if (type == 'sale') {
     url += '&price=' + encode(order_price);
   }
+  
+  if (coupon && coupon !== 'undefined') {
+      url += '&coupon=' + encode(coupon);
+  }
+
   if (adicional === 'sim') {
     url += '&ad_xtra1=' + encode(ad_xtra1) +
            '&ad_xtra2=' + encode(ad_xtra2) +
-           '&ad_xtra3=' + encode(ad_xtra3);
+           '&ad_xtra3=' + encode(ad_xtra3) +
+           '&ad_xtra4=' + encode(ad_xtra4) +
+           '&ad_xtra5=' + encode(ad_xtra5);
   }
 
   sendPixel(url, data.gtmOnSuccess() , data.gtmOnFailure());
