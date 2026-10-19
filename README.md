@@ -21,8 +21,9 @@ O template possui duas configurações principais:
 | **act_id**                       | ID do Pixel de Conversão (**ACT ID**).                       |
 | **order_id**                     | ID único da conversão (Transaction ID, Order ID, etc.).      |
 | **order_price**                  | Valor total da compra (aplicável para campanhas `sale`).     |
+|**coupon**                 | Código do cupom utilizado na compra (opcional).                     |
 | **adicional**                    | Define se há necessidade de um campo extra (`sim` ou `nao`). |
-| **ad_xtra1, ad_xtra2, ad_xtra3** | Campos extras opcionais para informações adicionais.         |
+| **ad_xtra1 … ad_xtra5**   | Campos extras opcionais para informações adicionais.                |
 
 ---
 
