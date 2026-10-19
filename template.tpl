@@ -12,7 +12,7 @@ ___INFO___
   "type": "TAG",
   "id": "cvt_TX2G3",
   "version": 1,
-  "displayName": "Teste Afilio Pixel Cupom",
+  "displayName": "Afilio Pixel",
   "categories": [
     "AFFILIATE_MARKETING",
     "ADVERTISING"
