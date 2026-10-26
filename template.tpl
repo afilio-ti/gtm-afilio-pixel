@@ -148,19 +148,6 @@ ___TEMPLATE_PARAMETERS___
     "name": "coupon",
     "displayName": "Cupom",
     "simpleValueType": true,
-    "valueValidators": [
-      {
-        "type": "NON_EMPTY",
-        "enablingConditions": [
-          {
-            "paramName": "type",
-            "paramValue": "sale.php",
-            "type": "EQUALS"
-          }
-        ],
-        "errorMessage": "Não pode ficar em branco para campanhas do tipo sale."
-      }
-    ],
     "help": "Deve ser preenchido com a variável de Cupom.\nShould be populated with the Coupon variable.",
     "enablingConditions": [
       {
@@ -279,6 +266,7 @@ const setCookie = require('setCookie');
 const getCookie = require('getCookieValues');
 const Random = require('generateRandom');
 const getUrl = require('getUrl');
+const getType = require('getType');
 
 var type = makeString(data.type);
 var config = makeString(data.config);
@@ -286,18 +274,17 @@ var order_id = makeString(data.order_id);
 var order_price = makeString(data.order_price);
 var adicional = makeString(data.adicional);
 var act_id = makeString(data.act_id);
-var coupon = makeString(data.coupon);
+var couponType = getType(data.coupon);
+var coupon = (couponType === 'string' || couponType === 'number') ? makeString(data.coupon) : '';
 var ad_xtra1 = makeString(data.ad_xtra1);
 var ad_xtra2 = makeString(data.ad_xtra2);
 var ad_xtra3 = makeString(data.ad_xtra3);
 var ad_xtra4 = makeString(data.ad_xtra4);
 var ad_xtra5 = makeString(data.ad_xtra5);
 
-var url;
-
 function getQueryParam(url, param) {
     const params = url.split('&');
-  
+
     for (let i = 0; i < params.length; i++) {
         const pair = params[i].split('=');
         const key = pair[0];
@@ -306,20 +293,20 @@ function getQueryParam(url, param) {
             return value;
         }
     }
-  
+
     return null;
 }
 
 function getValue(key) {
   var value = localStorage.getItem(key);
-  
+
   if (value === null || value === "undefined" || value === "") {
     var cookieValues = getCookie(key);
     if (cookieValues.length > 0) {
       value = cookieValues[0];
     }
   }
-  
+
   return value;
 }
 
@@ -351,26 +338,22 @@ function setParams() {
 }
 
 
-if(config == 'init'){
+if (config == 'init') {
   setParams();
+  data.gtmOnSuccess();
 }
 else {
   const origin = getValue('aforigin');
   const click = getValue('afclick');
-  let url;
-  
-  url = 'https://p.afilio.com.br/?tra_id=' + encode(order_id) +
-        '&act_id=' + encode(act_id) +
-        '&origin=' + encode(origin) +
-        '&id_click=' + encode(click) +
-        '&coupon=' + encode(coupon);
+
+  let url = 'https://p.afilio.com.br/?tra_id=' + encode(order_id) +
+            '&act_id=' + encode(act_id) +
+            '&origin=' + encode(origin) +
+            '&id_click=' + encode(click) +
+            '&coupon=' + encode(coupon);
 
   if (type == 'sale') {
     url += '&price=' + encode(order_price);
-  }
-  
-  if (coupon && coupon !== 'undefined') {
-      url += '&coupon=' + encode(coupon);
   }
 
   if (adicional === 'sim') {
@@ -381,11 +364,8 @@ else {
            '&ad_xtra5=' + encode(ad_xtra5);
   }
 
-  sendPixel(url, data.gtmOnSuccess() , data.gtmOnFailure());
+  sendPixel(url, data.gtmOnSuccess, data.gtmOnFailure);
 }
-
-data.gtmOnSuccess();
-data.gtmOnFailure();
 
 
 ___WEB_PERMISSIONS___
